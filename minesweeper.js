@@ -37,7 +37,7 @@
 
     function getSetVariables() {
         var elm = getValueById('select');
-        document.getElementById('mineCount').innerText += ' ' + levels[elm].numMines;
+        document.getElementById('mineCount').innerText = ' Number of mines present ' + levels[elm].numMines;
         return {
             rows: levels[elm].boardSize[0],
             cols: levels[elm].boardSize[1],
