@@ -20,7 +20,7 @@
             'numMines': 30
         },
         'expert': {
-            'boardSize': [15, 16],
+            'boardSize': [20, 20],
             'numMines': 99
         }
     };
@@ -67,6 +67,7 @@
 
     Game.prototype.createBoard = function createBoard() {
         let table = document.createElement('table');
+
         for (let i = 0; i < this.rowSize; i++) {
             let tr = document.createElement('tr');
             this.cellData[i] = [];
@@ -110,6 +111,13 @@
                 if (td.innerText < 0) {
                     that.displayAllMineCells(tds);
                     alert("Game over");
+                } else {
+                    var clickedCells = document.getElementsByClassName('clicked').length;
+                    var allTD = document.getElementsByTagName('td').length;
+                    if (allTD - clickedCells === that.mineCount) {
+                        alert('you win');
+                        that.displayAllMineCells(tds);
+                    }
                 }
             });
         });
@@ -117,7 +125,8 @@
 
     Game.prototype.plantMines = function plantMines() {
         var x, y;
-        while (this.mineCount--) {
+        var counter = 0;
+        while (counter++ < this.mineCount) {
             x = getRandomNumber(this.rowSize);
             y = getRandomNumber(this.colSize);
             // below small check to avoid overlapping of common numbers,
@@ -126,7 +135,7 @@
                 this.cellData[x][y] = -1;
                 this.minePos.push({x: x, y: y});
             } else {
-                this.mineCount++;
+                counter--;
             }
         }
     };
